@@ -126,7 +126,7 @@ model Conversation {
   id String @id @default(uuid())
 
   memberOneId String
-  memverOne Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
+  memberOne Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
 
   memberTwoId String
   memberTwo Member @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
