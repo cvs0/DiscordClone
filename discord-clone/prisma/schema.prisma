@@ -105,7 +105,7 @@ model Message {
   id String @id @default(uuid())
   content String @db.Text
 
-  fileurl String? @db.Text
+  fileUrl String? @db.Text
 
   memberId String
   member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)

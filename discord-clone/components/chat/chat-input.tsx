@@ -23,6 +23,8 @@ const formSchema = z.object({
     content: z.string().min(1), 
 })
 
+type FormValues = z.infer<typeof formSchema>;
+
 export const ChatInput = ({
     apiUrl,
     query,
@@ -41,7 +43,7 @@ export const ChatInput = ({
 
     const isLoading = form.formState.isSubmitting
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values: FormValues) => {
         try {
             const url = qs.stringifyUrl({
                 url: apiUrl,

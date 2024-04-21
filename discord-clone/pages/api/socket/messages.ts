@@ -14,7 +14,7 @@ export default async function handler(
 
     try {
         const profile = await currentProfilePages(req)
-        const { content, fileurl } = req.body
+        const { content, fileUrl } = req.body
         const { serverId, channelId } = req.query
 
         if (!profile) {
@@ -71,7 +71,7 @@ export default async function handler(
         const message = await db.message.create({
             data: {
                 content,
-                fileurl,
+                fileUrl,
                 channelId: channelId as string,
                 memberId: member.id,
             },
