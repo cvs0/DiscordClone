@@ -17,6 +17,8 @@ const ServerIdLayout = async ({ params, children }: ServerIdLayoutProps) => {
 
   if (profile == null) return redirectToSignIn();
 
+  console.log(params.serverId)
+
   const server = await db.server.findUnique({
     where: {
       id: params.serverId,

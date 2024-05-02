@@ -1,63 +1,78 @@
 import { db } from "./db"
 
-export const getOrCreateConversation = async (memberOneId: string, memberTwoId: string) => {
-    let conversation = await findConversation(memberOneId, memberTwoId) || await findConversation(memberTwoId, memberOneId)
-
+export const getOrCreateConversation = async (
+    memberOneId: string,
+    memberTwoId: string
+  ) => {
+    let conversation =
+      (await findConversations(memberOneId, memberTwoId)) ||
+      (await findConversations(memberTwoId, memberOneId));
+  
     if (!conversation) {
-        conversation = await createNewConversation(memberOneId, memberTwoId)
+      conversation = await createConversations(memberOneId, memberTwoId);
     }
-
     return conversation;
-}
-
-const findConversation = async (memberOneId: string, memberTwoId: string) => {
+  };
+  
+  const findConversations = async (memberOneId: string, memberTwoId: string) => {
     try {
-        return await db.conversation.findFirst({
-            where: {
-                AND: [
-                    { memberOneId: memberOneId },
-                    { memberTwoId: memberTwoId }
-                ]
+      return await db.conversation.findFirst({
+        where: {
+          AND: [
+            {
+              memberOneId: memberOneId,
             },
+            {
+              memberTwoId: memberTwoId,
+            },
+          ],
+        },
+        include: {
+          memberOne: {
             include: {
-                memberOne: {
-                    include: {
-                        profile: true,
-                    }
-                },
-                memberTwo: {
-                    include: {
-                        profile: true,
-                    }
-                }
-            }
-        })
-    } catch {
-        return null
+              profile: true,
+            },
+          },
+          memberTwo: {
+            include: {
+                profile: true,
+            },
+          },
+        },
+      });
+    } catch (err) {
+      console.log("find err", err);
+      return null;
     }
-}
-
-const createNewConversation = async (memberOneId: string, memberTwoId: string) => {
+  };
+  
+  const createConversations = async (
+    memberOneId: string,
+    memberTwoId: string
+  ) => {
     try {
-        return await db.conversation.create({
-            data: {
-                memberOneId,
-                memberTwoId
-            },
+      return await db.conversation.create({
+        data: {
+          memberOneId,
+          memberTwoId,
+        },
+        include: {
+          memberOne: {
             include: {
-                memberOne: {
-                    include: {
-                        profile: true,
-                    }
-                },
-                memberTwo: {
-                    include: {
-                        profile: true,
-                    }
-                }
-            }
-        })
-    } catch {
-        return null
+                profile: true,
+            },
+          },
+          memberTwo: {
+            include: {
+                profile: true,
+            },
+          },
+        },
+      });
+    } catch (err) {
+      console.log("create err", err);
+  
+      return null;
     }
-}
+  };
+  

@@ -38,7 +38,7 @@ const ServerSidebar = async ({
 
     const server = await db.server.findUnique({
         where: {
-            id: serverId!,
+            id: serverId,
         },
         include: {
             channels: {

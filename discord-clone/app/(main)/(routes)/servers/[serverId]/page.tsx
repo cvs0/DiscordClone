@@ -19,6 +19,8 @@ const page = async ({
     return redirectToSignIn()
   }
 
+  console.log(params.serverId)
+
   const server = await db.server.findUnique({
     where: {
       id: params.serverId,

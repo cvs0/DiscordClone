@@ -69,7 +69,7 @@ const MemberIdPage = async ({
                 }}
             />
             <ChatInput
-                name={otherMember.profile.name}
+                name={otherMember.profile.name as string}
                 type="conversation"
                 apiUrl="/api/socket/direct-messages"
                 query={{
